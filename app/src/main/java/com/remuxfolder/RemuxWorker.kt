@@ -302,7 +302,7 @@ class RemuxWorker(
                             ) { time, speed ->
                                 publishFileProgress(source.name, index, sources.size, succeeded, failed, skipped, omittedTracks, time, inputMedia.durationSeconds, speed)
                             }
-                            logs = "${logs.takeLast(MAX_LOG_CHARS / 2)}\n--- reintento sin pista $streamIndex ---\n${session.allLogsAsString}"
+                            logs = "${logs.takeLast(MAX_LOG_CHARS / 2)}\n--- reintento sin pista ${failedStream?.index ?: "?"} ---\n${session.allLogsAsString}"
                             fileLog = logs
                         }
                     }
@@ -625,7 +625,7 @@ class RemuxWorker(
                     },
                     null,
                     { statistics ->
-                        onStatistics(statistics.time, statistics.speed.orEmpty())
+                        onStatistics(statistics.time.toLong(), String.format(Locale.ROOT, "%.2fx", statistics.speed))
                     },
                 )
                 continuation.invokeOnCancellation {
@@ -1210,8 +1210,4 @@ class RemuxWorker(
         private val CHAPTER_CONTAINERS = setOf(OutputContainer.MP4, OutputContainer.MOV, OutputContainer.MKV)
     }
 
-    override fun onStopped() {
-        FFmpegKit.cancel()
-        super.onStopped()
-    }
 }
