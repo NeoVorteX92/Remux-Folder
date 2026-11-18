@@ -37,6 +37,16 @@ jobs:
       - name: Build debug and release APKs
         run: gradle --no-daemon --stacktrace :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease
 
+      - name: Save lint report for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: remux-folder-lint-report
+          path: |
+            app/build/reports/lint-results-debug.html
+            app/build/reports/lint-results-debug.xml
+          if-no-files-found: ignore
+
       - name: Confirm the APK does not request Internet access
         shell: bash
         run: |
