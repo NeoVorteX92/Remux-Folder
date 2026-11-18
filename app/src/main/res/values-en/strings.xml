@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Remux Folder</string>
     <string name="video_utility">VIDEO UTILITY</string>
-    <string name="header_tagline">Change your videos' container without re-encoding them.</string>
+    <string name="header_tagline">Change your videos\' container without re-encoding them.</string>
     <string name="folder_choose">Choose a folder</string>
     <string name="folder_all_subfolders">All subfolders will be included</string>
     <string name="folder_searching">Searching for videos in the whole folder…</string>
@@ -113,7 +113,7 @@
     <string name="worker_output_track_count">Verification found a different number of tracks.</string>
     <string name="worker_output_video_count">Verification could not find all expected video tracks.</string>
     <string name="worker_output_duration">The output duration does not match the original.</string>
-    <string name="worker_ffprobe_error">FFprobe could not read the file's tracks.</string>
+    <string name="worker_ffprobe_error">FFprobe could not read the file\'s tracks.</string>
     <string name="worker_probe_parse_error">The file analysis could not be interpreted.</string>
     <string name="worker_ffmpeg_error">FFmpeg could not write the %1$s container.</string>
     <string name="worker_output_prepare_error">Could not prepare a temporary file for %1$s.</string>
