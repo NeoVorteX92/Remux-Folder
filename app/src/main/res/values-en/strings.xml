@@ -105,8 +105,8 @@
     <string name="notification_preflight_complete">Analysis complete · %1$d compatible · %2$d would omit tracks · %3$d incompatible</string>
     <string name="notification_no_videos">No videos were found in that folder.</string>
     <string name="worker_preparing">Preparing analysis…</string>
-    <string name="worker_analyzing">Analyzing %1$d/%2$d: %3$s</string>
-    <string name="worker_remuxing">Remuxing %1$d/%2$d: %3$s</string>
+    <string name="worker_analyzing">Analyzing %1$s/%2$s: %3$s</string>
+    <string name="worker_remuxing">Remuxing %1$s/%2$s: %3$s</string>
     <string name="worker_input_missing">The selected folder was not provided.</string>
     <string name="worker_folder_open_error">The selected folder could not be opened.</string>
     <string name="worker_empty_output">The temporary file is empty.</string>

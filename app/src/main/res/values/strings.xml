@@ -105,8 +105,8 @@
     <string name="notification_preflight_complete">Análisis listo · %1$d compatibles · %2$d con pistas omitidas · %3$d incompatibles</string>
     <string name="notification_no_videos">No se encontraron videos en esa carpeta.</string>
     <string name="worker_preparing">Preparando análisis…</string>
-    <string name="worker_analyzing">Analizando %1$d/%2$d: %3$s</string>
-    <string name="worker_remuxing">Remuxeando %1$d/%2$d: %3$s</string>
+    <string name="worker_analyzing">Analizando %1$s/%2$s: %3$s</string>
+    <string name="worker_remuxing">Remuxeando %1$s/%2$s: %3$s</string>
     <string name="worker_input_missing">No se recibió la carpeta seleccionada.</string>
     <string name="worker_folder_open_error">No se pudo abrir la carpeta seleccionada.</string>
     <string name="worker_empty_output">El archivo temporal quedó vacío.</string>
