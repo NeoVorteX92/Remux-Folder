@@ -139,8 +139,8 @@ class RemuxWorker(
                         foregroundInfo(
                             text = applicationContext.getString(
                                 R.string.worker_analyzing,
-                                index + 1,
-                                sources.size,
+                                (index + 1).toString(),
+                                sources.size.toString(),
                                 source.name,
                             ),
                             total = sources.size,
@@ -236,8 +236,8 @@ class RemuxWorker(
                         foregroundInfo(
                             text = applicationContext.getString(
                                 R.string.worker_remuxing,
-                                index + 1,
-                                sources.size,
+                                (index + 1).toString(),
+                                sources.size.toString(),
                                 source.name,
                             ),
                             total = sources.size,
@@ -451,8 +451,8 @@ class RemuxWorker(
                 foregroundInfo(
                     applicationContext.getString(
                         R.string.worker_analyzing,
-                        index + 1,
-                        sources.size,
+                        (index + 1).toString(),
+                        sources.size.toString(),
                         source.name,
                     ),
                     sources.size,
