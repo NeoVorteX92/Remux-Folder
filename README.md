@@ -39,7 +39,7 @@ La app mantiene un `PARTIAL_WAKE_LOCK` con vencimiento y lo libera al terminar. 
 
 ## Compilar con GitHub Actions
 
-El workflow `.github/workflows/android.yml` ejecuta pruebas unitarias, lint y compilaciones debug y release en cada push, pull request o ejecución manual. Descarga el artefacto `remux-folder-apks` desde la ejecución de Actions. El APK debug queda firmado para instalarlo; el release queda sin firmar para firmarlo antes de distribuirlo. Las pruebas y la compilación de esta revisión quedan pendientes de ejecutar en GitHub Actions.
+El workflow `.github/workflows/android.yml` ejecuta pruebas unitarias, lint y compilaciones debug y release en cada push, pull request o ejecución manual. Publica el artefacto `remux-folder-apks` en cada ejecución. El APK debug queda firmado para instalarlo; el release queda sin firmar para firmarlo antes de distribuirlo.
 
 El proyecto no requiere compilarse en una PC local.
 
