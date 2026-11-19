@@ -37,6 +37,29 @@ jobs:
       - name: Build debug and release APKs
         run: gradle --no-daemon --stacktrace :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease
 
+      - name: List lint errors for review
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          report = Path("app/build/reports/lint-results-debug.xml")
+          if not report.exists():
+              print("Lint report was not created.")
+          else:
+              root = ET.parse(report).getroot()
+              errors = [issue for issue in root.findall("issue") if issue.get("severity") == "Error"]
+              for issue in errors:
+                  location = issue.find("location")
+                  where = ""
+                  if location is not None:
+                      where = f"{location.get('file', '')}:{location.get('line', '')} "
+                  print(f"Lint ERROR {issue.get('id', '')} {where}{issue.get('message', '')}")
+              print(f"Lint errors listed: {len(errors)}")
+          PY
+
       - name: Save lint report for review
         if: always()
         uses: actions/upload-artifact@v4
