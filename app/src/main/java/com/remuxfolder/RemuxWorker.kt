@@ -160,8 +160,9 @@ class RemuxWorker(
                         ),
                     )
 
-                    val inputPath = FFmpegKitConfig.getSafParameterForRead(applicationContext, source.uri)
-                    val inputMedia = probe(inputPath)
+                    // SAF paths are single-use: FFprobe consumes its own path, so every FFmpeg
+                    // attempt must receive a fresh path for the same original document.
+                    val inputMedia = probe(newSafInputPath(source.uri))
                     val sourceExtension = source.name.substringAfterLast('.', "")
                         .lowercase(Locale.ROOT)
                     val plan = MediaRemuxPlanner.plan(
@@ -266,7 +267,15 @@ class RemuxWorker(
                     }
                     var planForOutput = plan
                     var session = runFfmpeg(
-                        buildArguments(planForOutput, sourceExtension, inputMedia, bitstreamFilters, inputPath, outputPath, container),
+                        buildArguments(
+                            planForOutput,
+                            sourceExtension,
+                            inputMedia,
+                            bitstreamFilters,
+                            newSafInputPath(source.uri),
+                            outputPath,
+                            container,
+                        ),
                     ) { time, speed ->
                         publishFileProgress(source.name, index, sources.size, succeeded, failed, skipped, omittedTracks, time, inputMedia.durationSeconds, speed)
                     }
@@ -298,7 +307,15 @@ class RemuxWorker(
                             val retryOutput = if (useSeekableLocalOutput) outputPath else
                                 FFmpegKitConfig.getSafParameterForWrite(applicationContext, temporaryFile!!.uri)
                             session = runFfmpeg(
-                                buildArguments(planForOutput, sourceExtension, inputMedia, bitstreamFilters, inputPath, retryOutput, container),
+                                buildArguments(
+                                    planForOutput,
+                                    sourceExtension,
+                                    inputMedia,
+                                    bitstreamFilters,
+                                    newSafInputPath(source.uri),
+                                    retryOutput,
+                                    container,
+                                ),
                             ) { time, speed ->
                                 publishFileProgress(source.name, index, sources.size, succeeded, failed, skipped, omittedTracks, time, inputMedia.durationSeconds, speed)
                             }
@@ -460,8 +477,7 @@ class RemuxWorker(
                 ),
             )
             try {
-                val inputPath = FFmpegKitConfig.getSafParameterForRead(applicationContext, source.uri)
-                val media = probe(inputPath)
+                val media = probe(newSafInputPath(source.uri))
                 val extension = source.name.substringAfterLast('.', "").lowercase(Locale.ROOT)
                 val plan = MediaRemuxPlanner.plan(media, extension, container, allowDropAllAudio, encoders)
                 val preflightRecord = when (plan.disposition) {
@@ -609,6 +625,9 @@ class RemuxWorker(
             throw IOException(applicationContext.getString(R.string.worker_probe_parse_error), exception)
         }
     }
+
+    private fun newSafInputPath(uri: Uri): String =
+        FFmpegKitConfig.getSafParameterForRead(applicationContext, uri)
 
     private suspend fun runFfmpeg(
         arguments: Array<String>,
